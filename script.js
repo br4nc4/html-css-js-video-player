@@ -5,7 +5,9 @@ volumeBtn = document.querySelector(".volume i"),
 volumeSlider = document.querySelector(".left input"),
 skipBackward = document.querySelector(".skip-backward i"),
 skipForward = document.querySelector(".skip-forward i"),
-playPauseBtn = document.querySelector(".play-pause i");
+playPauseBtn = document.querySelector(".play-pause i"),
+speedBtn = document.querySelector(".playback-speed span"),
+speedOptions = document.querySelector(".speed-options");
 
 mainVideo.addEventListener("timeupdate", e => {
     let { currentTime, duration} = e.target; //otteniamo il tempo corrente e la durata
@@ -23,10 +25,34 @@ volumeBtn.addEventListener("click", () => {
         mainVideo.volume = 0.0; //passiamo un valore di 0.0 al volume del video, il video sarà muto
         volumeBtn.classList.replace("fa-volume-high", "fa-volume-xmark");
     }
+    volumeSlider.value = mainVideo.volume; // aggiorniamo il valore dello slider asseconda del volume del video
 });
 
 volumeSlider.addEventListener("input", e =>{
     mainVideo.volume = e.target.value; // passiamo il valore dello slider al volume del video
+    if(e.target.value == 0){
+        volumeBtn.classList.replace("fa-volume-high", "fa-volume-xmark");
+    } else {
+        volumeBtn.classList.replace("fa-volume-xmark", "fa-volume-high");
+    }
+});
+
+speedBtn.addEventListener("click", () => {
+    speedOptions.classList.toggle("show"); //aggiunge e rimuove la classe show
+})
+
+speedOptions.querySelectorAll("li").forEach(option => {
+    option.addEventListener("click", () => { //aggiunge il click event al tutte le opzioni di velocità di riproduzione
+        mainVideo.playbackRate = option.dataset.speed; //passa il valore di option dataset al valore del video playback
+        speedOptions.querySelector(".active").classList.remove("active"); //rimuovendo la classe active
+        option.classList.add("active") //aggiungendo la classe active
+    })
+});
+
+document.addEventListener("click", e =>{ //nasconde le opzioni di velocità al click del document
+    if(e.target.tagName !== "SPAN" || e.target.className !== "material-symbols-rounded"){
+        speedOptions.classList.remove("show");
+    }
 });
 
 skipBackward.addEventListener("click", () => {
