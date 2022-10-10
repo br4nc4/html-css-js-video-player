@@ -46,12 +46,23 @@ mainVideo.addEventListener("loadeddata", e =>{
     videoDuration.innerText = formatTime(e.target.duration);
 });
 
-
-
 videoTimeline.addEventListener("click", e => {
     let timelineWidth = videoTimeline.clientWidth;
     mainVideo.currentTime = (e.offsetX / timelineWidth) * mainVideo.duration; //e.offsetX restituisce la posizione in orizzonatale del mouse
+});
 
+const draggableProgressBar = e => {
+    let timelineWidth = videoTimeline.clientWidth;
+    progressBar.style.width = `${e.offsetX}px`;
+    mainVideo.currentTime = (e.offsetX / timelineWidth) * mainVideo.duration; //e.offsetX restituisce la posizione in orizzonatale del mouse
+}
+
+videoTimeline.addEventListener("mousedown", () => {
+    videoTimeline.addEventListener("mousemove", draggableProgressBar)
+});
+
+document.querySelector(".container").addEventListener("mouseup", () =>{
+    videoTimeline.removeEventListener("mousemove", draggableProgressBar)
 });
 
 volumeBtn.addEventListener("click", () => {
