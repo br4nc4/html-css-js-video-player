@@ -1,4 +1,4 @@
-const container = document.querySelector("container"),
+const container = document.querySelector(".container"),
 mainVideo = document.querySelector("video"),
 videoTimeline = document.querySelector(".video-timeline"),
 progressBar = document.querySelector(".progress-bar"),
@@ -18,13 +18,13 @@ let timer;
 const hideControls = () => {
     if(mainVideo.paused) return;
     timer = setTimeout(() => {
-        document.querySelector(".container").classList.remove("show-controls");
+        container.classList.remove("show-controls");
     }, 3000);
 };
 hideControls();
 
-document.querySelector(".container").addEventListener("mousemove", () => {
-    document.querySelector(".container").classList.add("show-controls");
+container.addEventListener("mousemove", () => {
+    container.classList.add("show-controls");
     clearTimeout(timer);
     hideControls();
 })
@@ -77,7 +77,7 @@ videoTimeline.addEventListener("mousedown", () => {
     videoTimeline.addEventListener("mousemove", draggableProgressBar)
 });
 
-document.querySelector(".container").addEventListener("mouseup", () =>{
+container.addEventListener("mouseup", () =>{
     videoTimeline.removeEventListener("mousemove", draggableProgressBar)
 });
 
@@ -134,14 +134,14 @@ picInPicBtn.addEventListener("click", () =>{
 
 fullscreenBtn.addEventListener("click", () =>{
     /* mainVideo.requestFullscreen(); //cambia la risoluzione del video a schermo intero */
-    document.querySelector(".container").classList.toggle("fullscreen"); //cambia la risoluzione del video a schermo intero
+    container.classList.toggle("fullscreen"); //cambia la risoluzione del video a schermo intero
     if(document.fullscreenElement){ // se il video è già a schermo intero
         fullscreenBtn.classList.replace("fa-compress", "fa-expand")
         return document.exitFullscreen();
     }
 
     fullscreenBtn.classList.replace("fa-expand", "fa-compress")
-    document.querySelector(".container").requestFullscreen();
+    container.requestFullscreen();
 });
 
 skipBackward.addEventListener("click", () => {
