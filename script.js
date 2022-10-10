@@ -13,6 +13,21 @@ speedBtn = document.querySelector(".playback-speed span"),
 speedOptions = document.querySelector(".speed-options"),
 picInPicBtn = document.querySelector(".pic-in-pic span"),
 fullscreenBtn = document.querySelector(".fullscreen i");
+let timer;
+
+const hideControls = () => {
+    if(mainVideo.paused) return;
+    timer = setTimeout(() => {
+        document.querySelector(".container").classList.remove("show-controls");
+    }, 3000);
+};
+hideControls();
+
+document.querySelector(".container").addEventListener("mousemove", () => {
+    document.querySelector(".container").classList.add("show-controls");
+    clearTimeout(timer);
+    hideControls();
+})
 
 const formatTime = time => {
     //otteniamo i secondi, minuti e ore
@@ -54,8 +69,9 @@ videoTimeline.addEventListener("click", e => {
 const draggableProgressBar = e => {
     let timelineWidth = videoTimeline.clientWidth;
     progressBar.style.width = `${e.offsetX}px`;
-    mainVideo.currentTime = (e.offsetX / timelineWidth) * mainVideo.duration; //e.offsetX restituisce la posizione in orizzonatale del mouse
-}
+    mainVideo.currentTime = (e.offsetX / timelineWidth) * mainVideo.duration;
+    currentVidTime.innerText = formatTime(mainVideo.currentTime);
+} 
 
 videoTimeline.addEventListener("mousedown", () => {
     videoTimeline.addEventListener("mousemove", draggableProgressBar)
@@ -64,6 +80,15 @@ videoTimeline.addEventListener("mousedown", () => {
 document.querySelector(".container").addEventListener("mouseup", () =>{
     videoTimeline.removeEventListener("mousemove", draggableProgressBar)
 });
+
+videoTimeline.addEventListener("mousemove", e => {
+    const progressTime = videoTimeline.querySelector("span");
+    let offsetX = e.offsetX; //otteniamo la posizione del mouse
+    progressTime.style.left = `${offsetX}px`;
+    let timelineWidth = videoTimeline.clientWidth;
+    let percent = (e.offsetX / timelineWidth) * mainVideo.duration;
+    progressTime.innerText = formatTime(percent);
+})
 
 volumeBtn.addEventListener("click", () => {
     if (!volumeBtn.classList.contains("fa-volume-high")){ // se l'icona del volume non ha la classe fa-volume-high
