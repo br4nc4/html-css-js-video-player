@@ -4,6 +4,8 @@ videoTimeline = document.querySelector(".video-timeline"),
 progressBar = document.querySelector(".progress-bar"),
 volumeBtn = document.querySelector(".volume i"),
 volumeSlider = document.querySelector(".left input"),
+currentVidTime = document.querySelector(".current-time"),
+videoDuration = document.querySelector(".video-duration"),
 skipBackward = document.querySelector(".skip-backward i"),
 skipForward = document.querySelector(".skip-forward i"),
 playPauseBtn = document.querySelector(".play-pause i"),
@@ -12,13 +14,39 @@ speedOptions = document.querySelector(".speed-options"),
 picInPicBtn = document.querySelector(".pic-in-pic span"),
 fullscreenBtn = document.querySelector(".fullscreen i");
 
+const formatTime = time => {
+    //otteniamo i secondi, minuti e ore
+    let seconds = Math.floor(time % 60),
+    minutes  = Math.floor(time / 60) % 60,
+    hours = Math.floor(time / 3600);
+
+    //aggiungiamo zero all'inizio se il valore è minore di 10
+    seconds = seconds < 10 ? `0${seconds}` : seconds;
+    minutes = minutes < 10 ? `0${minutes}` : minutes;
+    hours = hours < 10 ? `0${hours}` : hours;
+
+    if(hours == 0){
+        return `${minutes}:${seconds}`;
+    }
+
+    return `${hours}:${minutes}:${seconds}`;
+};
+
 mainVideo.addEventListener("timeupdate", e => {
     let { currentTime, duration} = e.target; //otteniamo il tempo corrente e la durata
 
     let percent = (currentTime / duration) * 100; //otteniamo la percentuale
 
     progressBar.style.width = `${percent}%`; //passiamo il valore di percent alla width della progressbar
+
+    currentVidTime.innerText = formatTime(currentTime);
 });
+
+mainVideo.addEventListener("loadeddata", e =>{
+    videoDuration.innerText = formatTime(e.target.duration);
+});
+
+
 
 videoTimeline.addEventListener("click", e => {
     let timelineWidth = videoTimeline.clientWidth;
