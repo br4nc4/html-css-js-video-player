@@ -1,5 +1,6 @@
 const container = document.querySelector("container"),
 mainVideo = document.querySelector("video"),
+videoTimeline = document.querySelector(".video-timeline"),
 progressBar = document.querySelector(".progress-bar"),
 volumeBtn = document.querySelector(".volume i"),
 volumeSlider = document.querySelector(".left input"),
@@ -17,6 +18,12 @@ mainVideo.addEventListener("timeupdate", e => {
     let percent = (currentTime / duration) * 100; //otteniamo la percentuale
 
     progressBar.style.width = `${percent}%`; //passiamo il valore di percent alla width della progressbar
+});
+
+videoTimeline.addEventListener("click", e => {
+    let timelineWidth = videoTimeline.clientWidth;
+    mainVideo.currentTime = (e.offsetX / timelineWidth) * mainVideo.duration; //e.offsetX restituisce la posizione in orizzonatale del mouse
+
 });
 
 volumeBtn.addEventListener("click", () => {
