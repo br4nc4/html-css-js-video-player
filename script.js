@@ -7,7 +7,8 @@ skipBackward = document.querySelector(".skip-backward i"),
 skipForward = document.querySelector(".skip-forward i"),
 playPauseBtn = document.querySelector(".play-pause i"),
 speedBtn = document.querySelector(".playback-speed span"),
-speedOptions = document.querySelector(".speed-options");
+speedOptions = document.querySelector(".speed-options"),
+picInPicBtn = document.querySelector(".pic-in-pic span");
 
 mainVideo.addEventListener("timeupdate", e => {
     let { currentTime, duration} = e.target; //otteniamo il tempo corrente e la durata
@@ -53,6 +54,10 @@ document.addEventListener("click", e =>{ //nasconde le opzioni di velocità al c
     if(e.target.tagName !== "SPAN" || e.target.className !== "material-symbols-rounded"){
         speedOptions.classList.remove("show");
     }
+});
+
+picInPicBtn.addEventListener("click", () =>{
+    mainVideo.requestPictureInPicture(); //cambia la modalità video in picture in picture
 });
 
 skipBackward.addEventListener("click", () => {
