@@ -113,11 +113,17 @@ body, .video-controls, .video-timer, .options{
 
 .container{
     max-width: 900px;
+    aspect-ratio: 16 / 9;
     width: 98%;
     position: relative;
     background: #000;
     border-radius: 5px;
     overflow: hidden;
+}
+
+.container.fullscreen{
+    max-width: 100%;
+    width: 100%;
 }
 
 .options button :where(i, span){

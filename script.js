@@ -62,7 +62,15 @@ picInPicBtn.addEventListener("click", () =>{
 });
 
 fullscreenBtn.addEventListener("click", () =>{
-    mainVideo.requestFullscreen(); //cambia la risoluzione del video a schermo intero
+    /* mainVideo.requestFullscreen(); //cambia la risoluzione del video a schermo intero */
+    document.querySelector(".container").classList.toggle("fullscreen"); //cambia la risoluzione del video a schermo intero
+    if(document.fullscreenElement){ // se il video è già a schermo intero
+        fullscreenBtn.classList.replace("fa-compress", "fa-expand")
+        return document.exitFullscreen();
+    }
+
+    fullscreenBtn.classList.replace("fa-expand", "fa-compress")
+    document.querySelector(".container").requestFullscreen();
 });
 
 skipBackward.addEventListener("click", () => {
