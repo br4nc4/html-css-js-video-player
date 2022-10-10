@@ -8,7 +8,8 @@ skipForward = document.querySelector(".skip-forward i"),
 playPauseBtn = document.querySelector(".play-pause i"),
 speedBtn = document.querySelector(".playback-speed span"),
 speedOptions = document.querySelector(".speed-options"),
-picInPicBtn = document.querySelector(".pic-in-pic span");
+picInPicBtn = document.querySelector(".pic-in-pic span"),
+fullscreenBtn = document.querySelector(".fullscreen i");
 
 mainVideo.addEventListener("timeupdate", e => {
     let { currentTime, duration} = e.target; //otteniamo il tempo corrente e la durata
@@ -58,6 +59,10 @@ document.addEventListener("click", e =>{ //nasconde le opzioni di velocità al c
 
 picInPicBtn.addEventListener("click", () =>{
     mainVideo.requestPictureInPicture(); //cambia la modalità video in picture in picture
+});
+
+fullscreenBtn.addEventListener("click", () =>{
+    mainVideo.requestFullscreen(); //cambia la risoluzione del video a schermo intero
 });
 
 skipBackward.addEventListener("click", () => {
