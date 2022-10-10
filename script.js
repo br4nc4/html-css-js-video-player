@@ -77,7 +77,7 @@ videoTimeline.addEventListener("mousedown", () => {
     videoTimeline.addEventListener("mousemove", draggableProgressBar)
 });
 
-container.addEventListener("mouseup", () =>{
+document.addEventListener("mouseup", () =>{
     videoTimeline.removeEventListener("mousemove", draggableProgressBar)
 });
 
